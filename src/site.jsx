@@ -11,9 +11,9 @@ const COMPANY = "Optimo Roofing Aruba";
   const BRAND_GRAY = "#A9A9A9";
 
   const SOCIALS = {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    google: "https://g.page/",
+  facebook: "https://facebook.com/",
+  instagram: "https://instagram.com/",
+  google: "https://g.page/",
   };
 
   // If you add a real endpoint below, the form will POST via AJAX (recommended).
