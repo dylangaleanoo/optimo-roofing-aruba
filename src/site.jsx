@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MapPin } from "lucide-react";
 
 export default function RoofingSite() {
-  
+  // ====== CONFIG ======
   const COMPANY = "Optimo Roofing Aruba";
   const PHONE = "+297 740-7106";
   const EMAIL = "optimoroofing@gmail.com";
@@ -13,13 +13,15 @@ export default function RoofingSite() {
   const LOGO = "/assets/optimo-logo.png";
   const BRAND = "#0A326E";
   const BRAND_GRAY = "#A9A9A9";
-  
+
+  // Social links (must be inside an object)
   const SOCIALS = {
     facebook: "https://facebook.com/",
     instagram: "https://instagram.com/",
     google: "https://g.page/",
   };
 
+  // ====== STATE / HOOKS ======
   const [mobileOpen, setMobileOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -54,7 +56,8 @@ export default function RoofingSite() {
     setErrors(e);
     if (Object.keys(e).length !== 0) return;
 
-   const subject = encodeURIComponent(`${COMPANY} Website Lead – ${form.service}`);
+    // Simple mailto submit
+    const subject = encodeURIComponent(`${COMPANY} Website Lead – ${form.service}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service}\nMessage: ${form.message}`
     );
@@ -64,7 +67,7 @@ export default function RoofingSite() {
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900" style={{ ["--brand"]: BRAND, ["--brand-gray"]: BRAND_GRAY }}>
-     
+      {/* Header */}
       <header className="sticky top-0 z-40 bg-white border-b">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
