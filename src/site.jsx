@@ -10,11 +10,7 @@ const LOGO = "/assets/optimo-logo.png";
 const BRAND = "#0A326E";
 const BRAND_GRAY = "#A9A9A9";
 
-const SOCIALS = {
-  facebook: "https://facebook.com/",
-  instagram: "https://instagram.com/",
-  google: "https://g.page/",
-};
+
 
 // If you add a real endpoint below, the form will POST via AJAX (recommended).
 // For Formspree, replace "yourid" with your actual ID from https://formspree.io
