@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MapPin } from "lucide-react";
 
 export default function RoofingSite() {
-  // ====== CONFIG ======
+  
   const COMPANY = "Optimo Roofing Aruba";
   const PHONE = "+297 740-7106";
   const EMAIL = "optimoroofing@gmail.com";
@@ -13,15 +13,13 @@ export default function RoofingSite() {
   const LOGO = "/assets/optimo-logo.png";
   const BRAND = "#0A326E";
   const BRAND_GRAY = "#A9A9A9";
-
-  // Social links (must be inside an object)
+  
   const SOCIALS = {
     facebook: "https://facebook.com/",
     instagram: "https://instagram.com/",
     google: "https://g.page/",
   };
 
-  // ====== STATE / HOOKS ======
   const [mobileOpen, setMobileOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -56,8 +54,7 @@ export default function RoofingSite() {
     setErrors(e);
     if (Object.keys(e).length !== 0) return;
 
-    // Simple mailto submit
-    const subject = encodeURIComponent(`${COMPANY} Website Lead – ${form.service}`);
+   const subject = encodeURIComponent(`${COMPANY} Website Lead – ${form.service}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service}\nMessage: ${form.message}`
     );
@@ -67,7 +64,7 @@ export default function RoofingSite() {
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900" style={{ ["--brand"]: BRAND, ["--brand-gray"]: BRAND_GRAY }}>
-      {/* Header */}
+     
       <header className="sticky top-0 z-40 bg-white border-b">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -130,4 +127,46 @@ export default function RoofingSite() {
 
       {/* Contact Section */}
       <section id="contact" className="bg-neutral-900 text-neutral-50 py-20 px-4">
-        <div className="max-w-3xl mx-auto rounded-2xl
+        <div className="max-w-3xl mx-auto rounded-2xl bg-white text-neutral-900 p-6 shadow-lg">
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Name*</label>
+                <input className="mt-1 w-full rounded-xl border p-3" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name}</p>}
+              </div>
+              <div>
+                <label className="text-sm font-medium">Phone*</label>
+                <input className="mt-1 w-full rounded-xl border p-3" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                {errors.phone && <p className="text-sm text-red-600 mt-1">{errors.phone}</p>}
+              </div>
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <input className="mt-1 w-full rounded-xl border p-3" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Message*</label>
+                <textarea className="mt-1 w-full rounded-xl border p-3 min-h-[120px]" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+                {errors.message && <p className="text-sm text-red-600 mt-1">{errors.message}</p>}
+              </div>
+              <button type="submit" className="w-full rounded-xl bg-[--brand] px-4 py-3 font-semibold text-white">
+                Send Request
+              </button>
+            </form>
+          ) : (
+            <div className="text-center py-10">
+              <div className="mx-auto h-16 w-16 rounded-full bg-green-500" />
+              <h3 className="mt-4 text-xl font-bold">Thanks! We got your message.</h3>
+              <p className="text-neutral-600">We’ll reach out shortly.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white text-center py-6 border-t">
+        <p className="text-sm text-neutral-600">© {new Date().getFullYear()} {COMPANY}. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}
