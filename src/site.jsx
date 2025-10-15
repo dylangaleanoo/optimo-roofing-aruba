@@ -14,7 +14,7 @@ export default function RoofingSite() {
   const BRAND = "#0A326E";
   const BRAND_GRAY = "#A9A9A9";
 
-  // Social links
+  // Social links (must be inside an object)
   const SOCIALS = {
     facebook: "https://facebook.com/",
     instagram: "https://instagram.com/",
@@ -44,8 +44,8 @@ export default function RoofingSite() {
   function validate() {
     const e = {};
     if (!form.name.trim()) e.name = "Please enter your name.";
-    if (!/^[0-9()\-+.\s]{7,}$/.test(form.phone)) e.phone = "Enter a valid phone.";
-    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email.";
+    if (!/^[0-9()\\-+\\.\\s]{7,}$/.test(form.phone)) e.phone = "Enter a valid phone.";
+    if (form.email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(form.email)) e.email = "Enter a valid email.";
     if (!form.message.trim()) e.message = "Tell us a bit about your project.";
     return e;
   }
@@ -56,7 +56,7 @@ export default function RoofingSite() {
     setErrors(e);
     if (Object.keys(e).length !== 0) return;
 
-    // Simple mailto: fallback
+    // Simple mailto submit
     const subject = encodeURIComponent(`${COMPANY} Website Lead – ${form.service}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nService: ${form.service}\nMessage: ${form.message}`
@@ -67,13 +67,67 @@ export default function RoofingSite() {
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900" style={{ ["--brand"]: BRAND, ["--brand-gray"]: BRAND_GRAY }}>
-      {/* Top bar */}
-      <div className="w-full bg-neutral-900 text-neutral-100 text-sm">
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
-          <p className="opacity-90">Serving {CITY} • {HOURS}</p>
-          <a className="font-semibold hover:opacity-80" href={`tel:${PHONE.replace(/[^0-9+]/g, "")}`}>Call {PHONE}</a>
-        </div>
-      </div>
-
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/80
+      <header className="sticky top-0 z-40 bg-white border-b">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src={LOGO} alt="Optimo Roofing logo" className="h-9 w-auto" />
+            <div>
+              <div className="font-black text-xl">{COMPANY}</div>
+              <div className="text-xs text-neutral-500">Roofing • {CITY}</div>
+            </div>
+          </div>
+          <nav className="hidden md:flex gap-6">
+            {nav.map((n) => (
+              <a key={n.href} href={n.href} className="text-sm font-medium hover:text-[--brand]">
+                {n.label}
+              </a>
+            ))}
+            <a href="#contact" className="inline-flex items-center rounded-xl border px-4 py-2 text-sm font-semibold bg-[--brand] text-white">
+              Free Estimate
+            </a>
+          </nav>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2 border rounded-lg">
+            ☰
+          </button>
+        </div>
+        {mobileOpen && (
+          <div className="md:hidden border-t bg-white px-4 py-3 space-y-2">
+            {nav.map((n) => (
+              <a key={n.href} href={n.href} onClick={() => setMobileOpen(false)} className="block py-2">
+                {n.label}
+              </a>
+            ))}
+            <a href="#contact" onClick={() => setMobileOpen(false)} className="block bg-[--brand] text-white px-4 py-2 rounded-xl text-center">
+              Free Estimate
+            </a>
+          </div>
+        )}
+      </header>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-30" />
+        <div className="mx-auto max-w-7xl px-4 py-24 relative">
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight">Roofs Built Right—On Time, On Budget.</h1>
+          <p className="mt-4 text-lg text-neutral-700">From leaks to full replacements, we deliver durable roofing solutions with clean job sites and clear communication.</p>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <a href="#contact" className="inline-flex items-center rounded-xl border px-5 py-3 text-base font-semibold bg-[--brand] text-white">
+              Get a Free Estimate
+            </a>
+            <a href="#services" className="inline-flex items-center rounded-xl border px-5 py-3 text-base font-semibold bg-white">
+              Explore Services
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Aruba Banner */}
+      <section className="bg-[--brand] text-white py-6 text-center flex items-center justify-center gap-3">
+        <MapPin size={24} />
+        <p className="text-lg font-semibold tracking-wide">Serving all of Aruba with trusted roofing solutions.</p>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="bg-neutral-900 text-neutral-50 py-20 px-4">
+        <div className="max-w-3xl mx-auto rounded-2xl
